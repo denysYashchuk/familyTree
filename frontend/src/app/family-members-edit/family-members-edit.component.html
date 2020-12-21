@@ -1,0 +1,56 @@
+<div *ngIf="member">
+  <h1>Edit/Add family member</h1>
+  <h2>ID: {{member.id}}</h2>
+
+  Name: <input [(ngModel)]="member.name">
+  Sex: <select [(ngModel)]="member.sex">
+  <option value="male">male</option>
+  <option value="female">female</option>
+</select>
+  Birth year: <input type="number" [(ngModel)]="member.birth_year">
+
+  <br>
+  <div *ngIf="member.parents && member.parents.length > 0" style="margin: 10px;">
+    <h3>Parents:</h3>
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>#</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Delete</th>
+      </tr>
+      <tr *ngFor="let parent of member.parents; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{parent.id}}</td>
+        <td>{{parent.name}}</td>
+        <td><button style="color: red;" (click)="deleteParent(i)">delete</button></td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="member.children && member.children.length > 0" style="margin: 10px;">
+    <h3>Children</h3>
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>#</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Delete</th>
+      </tr>
+      <tr *ngFor="let child of member.children; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{child.id}}</td>
+        <td>{{child.name}}</td>
+        <td><button style="color: red;" (click)="deleteChild(i)">delete</button></td>
+      </tr>
+    </table>
+  </div>
+
+  New child ID: <input type="number" #childId [defaultValue]="'child ID'" style="margin: 10px;">
+  <button (click)="addChild(childId.valueAsNumber)">Add child</button>
+  <br>
+  New parent ID: <input type="number" #parentId [defaultValue]="'parent ID'" style="margin: 10px;">
+  <button (click)="addParent(parentId.valueAsNumber)">Add parent</button>
+  <span style="color: red; margin-left: 10px" *ngIf="manyParents">* No more then 2 parents</span>
+  <br>
+  <button (click)="addOrSave()">Save</button>
+</div>

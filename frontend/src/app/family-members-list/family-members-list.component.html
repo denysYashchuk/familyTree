@@ -1,0 +1,50 @@
+<div *ngIf="page">
+  <button [routerLink]="'/family-members/edit/new'" style="margin: 10px">Add new</button>
+  <div style="margin: 10px">
+    Min Age: <input [(ngModel)]="minAge" type="number" min="0" max="2020" [defaultValue]="0">
+    Max Age: <input [(ngModel)]="maxAge" type="number" min="0" max="2020" [defaultValue]="2020">
+    <button style="margin: 10px" (click)="search()">Search</button>
+    <button style="margin: 10px" (click)="resetAge()">Reset</button>
+  </div>
+  Sort by: <select [(ngModel)]="sort" style="margin: 10px" (ngModelChange)="search()">
+    <option value="default">default</option>
+    <option value="age">age</option>
+    <option value="sex">sex</option>
+  </select>
+  <table border="1" cellpadding="5">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Birth year</th>
+      <th>Sex</th>
+      <th>Number of parents</th>
+      <th>Number of children</th>
+      <th>Details</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let member of page.members; let i = index">
+      <td>{{member.id}}</td>
+      <td>{{member.name}}</td>
+      <td>{{member.birth_year}}</td>
+      <td>{{member.sex}}</td>
+      <td *ngIf="member.parents; else elseParent">{{member.parents.length}}</td>
+      <ng-template #elseParent>
+        <td>0</td>
+      </ng-template>
+      <td *ngIf="member.children; else elseChildren">{{member.children.length}}</td>
+      <ng-template #elseChildren>
+        <td>0</td>
+      </ng-template>
+      <td><a [routerLink]="'/family-members/'+member.id">details</a></td>
+      <td><a [routerLink]="'/family-members/edit/'+member.id">edit</a></td>
+      <td>
+        <button style="color: red" (click)="delete(i, member.id)">delete</button>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <button *ngIf="page.current_page > 1" (click)="prevPage()">Prev</button>
+  <button disabled>{{page.current_page}}</button>
+  <button *ngIf="page.total_pages > page.current_page" (click)="nextPage()">Next</button>
+</div>

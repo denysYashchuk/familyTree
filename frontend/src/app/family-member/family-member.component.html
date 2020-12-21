@@ -1,0 +1,39 @@
+<div *ngIf="member">
+  <h1>Family member info</h1>
+  <h2>ID: {{member.id}}</h2>
+  <div>Name: {{member.name}}<br>
+    Sex: {{member.sex}}<br>
+    Birth year: {{member.birth_year}}
+  </div>
+  <br>
+  <div *ngIf="member.parents && member.parents.length > 0" style="margin: 10px;">
+    <h3>Parents:</h3>
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>#</th>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      <tr *ngFor="let parent of member.parents; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{parent.id}}</td>
+        <td>{{parent.name}}</td>
+      </tr>
+    </table>
+  </div>
+  <div *ngIf="member.children && member.children.length > 0" style="margin: 10px;">
+    <h3>Children</h3>
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>#</th>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      <tr *ngFor="let child of member.children; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{child.id}}</td>
+        <td>{{child.name}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
