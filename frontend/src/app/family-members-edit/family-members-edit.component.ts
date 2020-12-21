@@ -47,8 +47,8 @@ export class FamilyMembersEditComponent implements OnInit {
     if (this.member.id === 0) {
       this.familyMemberService.addMember(this.member).subscribe(
         response => {
-          console.log(response);
           this.member = response;
+          this.router.navigate(['/family-members/' + this.member.id]);
         }, error => {
           console.log(error);
         }
@@ -56,8 +56,8 @@ export class FamilyMembersEditComponent implements OnInit {
     } else {
       this.familyMemberService.updateMember(this.member.id, this.member).subscribe(
         response => {
-          console.log(response);
           this.member = response;
+          this.router.navigate(['/family-members/' + this.member.id]);
         }, error => {
           console.log(error);
         }

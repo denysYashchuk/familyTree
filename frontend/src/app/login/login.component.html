@@ -1,0 +1,5 @@
+Username: <input #username type="text">
+Password: <input #password type="password">
+<br>
+<button (click)="login(username.value, password.value)">Login</button>
+<p *ngIf="loginError" style="color: red">Failed to login</p>

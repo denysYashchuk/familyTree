@@ -1,3 +1,7 @@
+<div>
+  <button *ngIf="!authService.isAuthenticated()" [routerLink]="'/login'">Login</button>
+  <button *ngIf="authService.isAuthenticated()" (click)="authService.logout()">Logout</button>
+</div>
 <div *ngIf="page">
   <button [routerLink]="'/family-members/edit/new'" style="margin: 10px">Add new</button>
   <div style="margin: 10px">

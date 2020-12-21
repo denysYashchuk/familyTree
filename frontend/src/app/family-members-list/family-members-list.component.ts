@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Page} from '../entities/page';
 import {FamilyMemberService} from '../services/family-member.service';
 import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-family-members-list',
@@ -16,6 +17,7 @@ export class FamilyMembersListComponent implements OnInit {
   sort: string;
 
   constructor(private familyMemberService: FamilyMemberService,
+              private authService: AuthService,
               private route: ActivatedRoute) {
     this.minAge = 0;
     this.maxAge = 2020;
@@ -55,7 +57,7 @@ export class FamilyMembersListComponent implements OnInit {
   prevPage(): void {
     this.route.params.subscribe(
       params => {
-        this.familyMemberService.getPage(this.minAge, this.maxAge,this.page.current_page - 1, this.sort).subscribe(
+        this.familyMemberService.getPage(this.minAge, this.maxAge, this.page.current_page - 1, this.sort).subscribe(
           response => {
             console.log(response);
             this.page = response;
@@ -69,7 +71,7 @@ export class FamilyMembersListComponent implements OnInit {
   nextPage(): void {
     this.route.params.subscribe(
       params => {
-        this.familyMemberService.getPage(this.minAge, this.maxAge,this.page.current_page + 1, this.sort).subscribe(
+        this.familyMemberService.getPage(this.minAge, this.maxAge, this.page.current_page + 1, this.sort).subscribe(
           response => {
             console.log(response);
             this.page = response;
