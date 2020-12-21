@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FamilyMember} from '../entities/family-member';
 import {FamilyMemberService} from '../services/family-member.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AppSettings} from '../app-settings';
 
 @Component({
   selector: 'app-family-member',
@@ -11,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class FamilyMemberComponent implements OnInit {
 
   member: FamilyMember;
+  baseUrl = AppSettings.BASE_ENDPOINT;
 
   constructor(private familyMemberService: FamilyMemberService,
               private router: Router,

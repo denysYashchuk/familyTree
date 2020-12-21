@@ -1,12 +1,14 @@
 package com.example.family_tree.service.dto;
 
 import com.example.family_tree.domain.FamilyMember;
+import com.example.family_tree.domain.File;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /*
@@ -32,6 +34,9 @@ public class ResponseFamilyMemberDTO {
     @JsonProperty("children")
     private List<FamilyMemberDTO> children;
 
+    @JsonProperty("files")
+    private List<ResponseFileDTO> files;
+
     public ResponseFamilyMemberDTO(FamilyMember familyMember) {
         this.id = familyMember.getId();
         this.name = familyMember.getName();
@@ -50,6 +55,11 @@ public class ResponseFamilyMemberDTO {
             this.children = children.stream().map(FamilyMemberDTO::new).collect(Collectors.toList());
         }
 
+        Set<File> files = familyMember.getFiles();
+
+        if (files != null && !files.isEmpty()) {
+            this.files = files.stream().map(ResponseFileDTO::new).collect(Collectors.toList());
+        }
     }
 
     @Getter

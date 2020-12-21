@@ -1056,63 +1056,109 @@
       <Host>%</Host>
     </user>
     <table id="338" parent="3" name="family_member"/>
-    <table id="339" parent="3" name="parents"/>
-    <column id="340" parent="338" name="id">
+    <table id="339" parent="3" name="files"/>
+    <table id="340" parent="3" name="parents"/>
+    <column id="341" parent="338" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="338" name="name">
+    <column id="342" parent="338" name="name">
       <Position>2</Position>
       <DataType>char(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="342" parent="338" name="sex">
+    <column id="343" parent="338" name="sex">
       <Position>3</Position>
       <DataType>char(6)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="343" parent="338" name="birth_year">
+    <column id="344" parent="338" name="birth_year">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="344" parent="338" name="PRIMARY">
+    <key id="345" parent="338" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="345" parent="339" name="member_id">
+    <column id="346" parent="339" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="347" parent="339" name="name">
+      <Position>2</Position>
+      <DataType>char(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="348" parent="339" name="type">
+      <Position>3</Position>
+      <DataType>char(10)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="349" parent="339" name="data">
+      <Position>4</Position>
+      <DataType>mediumblob|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="350" parent="339" name="member_id">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="351" parent="339" name="files_family_member_id_fk">
+      <ColNames>member_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="352" parent="339" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="353" parent="339" name="files_family_member_id_fk">
+      <ColNames>member_id</ColNames>
+      <RefTableName>family_member</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="354" parent="340" name="member_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="339" name="parent_id">
+    <column id="355" parent="340" name="parent_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="347" parent="339" name="parents_family_member_id_fk">
+    <index id="356" parent="340" name="parents_family_member_id_fk">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="348" parent="339" name="parents_family_member_id_fk_2">
+    <index id="357" parent="340" name="parents_family_member_id_fk_2">
       <ColNames>parent_id</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="349" parent="339" name="parents_family_member_id_fk">
+    <foreign-key id="358" parent="340" name="parents_family_member_id_fk">
       <ColNames>member_id</ColNames>
       <RefTableName>family_member</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="350" parent="339" name="parents_family_member_id_fk_2">
+    <foreign-key id="359" parent="340" name="parents_family_member_id_fk_2">
       <ColNames>parent_id</ColNames>
       <RefTableName>family_member</RefTableName>
       <RefColNames>id</RefColNames>

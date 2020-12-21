@@ -5,16 +5,17 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 /*
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
@@ -51,5 +52,9 @@ public class FamilyMember {
             joinColumns = @JoinColumn(name = "parent_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private List<FamilyMember> children;
+
+    @OneToMany
+    @JoinColumn(name = "member_id")
+    private Set<File> files;
 
 }

@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-
-import static com.example.family_tree.config.Constants.CURRENT_YEAR;
 
 /*
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
