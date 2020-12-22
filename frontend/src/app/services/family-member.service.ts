@@ -20,10 +20,12 @@ export class FamilyMemberService {
   }
 
   getPage(minAge: number, maxAge: number, page: number, sort: string): Observable<Page> {
-    const params = new HttpParams().set('page', String(page))
-      .append('start', String(minAge))
+    const params = new HttpParams().set('start', String(minAge))
       .append('end', String(maxAge))
-      .append('sort', sort);
+      .append('page', String(page))
+      .append('size', '10')
+      .append('sort', sort === 'sex' ? 'sex,desc' : (sort === 'age' ? 'birthYear,asc' : 'id,asc'));
+
     return this.client.get<Page>(this.url, {params});
   }
 

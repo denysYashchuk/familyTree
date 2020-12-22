@@ -17,7 +17,7 @@ export class FamilyMembersListComponent implements OnInit {
   sort: string;
 
   constructor(private familyMemberService: FamilyMemberService,
-              private authService: AuthService,
+              public authService: AuthService,
               private route: ActivatedRoute) {
     this.minAge = 0;
     this.maxAge = 2020;
@@ -29,7 +29,7 @@ export class FamilyMembersListComponent implements OnInit {
   }
 
   search(): void {
-    this.familyMemberService.getPage(this.minAge, this.maxAge, 1, this.sort).subscribe(
+    this.familyMemberService.getPage(this.minAge, this.maxAge, 0, this.sort).subscribe(
       response => {
         this.page = response;
       }, error => {

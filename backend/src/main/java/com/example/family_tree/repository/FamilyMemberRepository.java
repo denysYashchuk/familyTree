@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -13,6 +14,7 @@ import java.util.List;
 public interface FamilyMemberRepository extends JpaRepository<FamilyMember, Integer> {
 
     List<FamilyMember> findByIdIn(List<Integer> ids);
-    Page<FamilyMember> findAllByBirthYearIsBetween(int startYear, int endYear, Pageable pageable);
+
+    Page<FamilyMember> findAllByBirthYearIsBetween(Date startYear, Date endYear, Pageable pageable);
 
 }

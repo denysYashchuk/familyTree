@@ -2,6 +2,7 @@ package com.example.family_tree.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -9,10 +10,10 @@ import java.util.List;
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
  */
 @AllArgsConstructor
-public class PageDTO {
+@Getter
+public class PageDTO<T> {
 
-    @JsonProperty("members")
-    private List<ResponseFamilyMemberDTO> members;
+    private List<T> members;
 
     @JsonProperty("current_page")
     private int currentPage;

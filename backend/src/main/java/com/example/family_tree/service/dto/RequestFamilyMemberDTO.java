@@ -1,5 +1,7 @@
 package com.example.family_tree.service.dto;
 
+import com.example.family_tree.domain.Sex;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -12,7 +14,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /*
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
@@ -26,14 +30,12 @@ public class RequestFamilyMemberDTO {
     @NotEmpty(message = "Name must not be empty")
     private String name;
 
-    @Pattern(regexp = "male|female", message = "Sex must be \"male\" or \"female\"")
-    private String sex;
+    private Sex sex;
 
     @NotNull(message = "Birth year must not be null")
-    @Min(value = 0, message = "Birth year must be >= 0")
-    @Max(value = 2020, message = "Birth year must be <= 2020")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy", timezone = "UTC")
     @JsonProperty("birth_year")
-    private Integer birthYear;
+    private Date birthYear;
 
     @Size(max = 2, message = "Max parents size is 2")
     List<ResponseFamilyMemberDTO.FamilyMemberDTO> parents;

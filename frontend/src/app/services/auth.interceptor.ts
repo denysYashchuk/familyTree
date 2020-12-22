@@ -4,7 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse, HttpHeaders
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
@@ -19,10 +19,20 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     if (this.authService.isAuthenticated()) {
       request = request.clone({
         setHeaders: {
-          Authorization: this.authService.getToken()
+          Authorization: this.authService.getToken(),
+          ContentType: 'application/json',
+          Accept: 'application/json'
+        }
+      });
+    } else {
+      request = request.clone({
+        setHeaders: {
+          ContentType: 'application/json',
+          Accept: 'application/json'
         }
       });
     }

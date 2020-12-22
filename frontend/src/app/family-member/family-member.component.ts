@@ -12,7 +12,7 @@ import {AppSettings} from '../app-settings';
 export class FamilyMemberComponent implements OnInit {
 
   member: FamilyMember;
-  baseUrl = AppSettings.BASE_ENDPOINT;
+  baseImageUrl = AppSettings.BASE_API_ENDPOINT + '/files/';
 
   constructor(private familyMemberService: FamilyMemberService,
               private router: Router,

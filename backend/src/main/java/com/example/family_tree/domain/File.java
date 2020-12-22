@@ -31,7 +31,7 @@ public class File {
 
     @Size(max = 10)
     @Column(name = "type", length = 10, nullable = false)
-    private String type;
+    private FileType type;
 
     @Lob
     @Column(name = "data", nullable = false)
@@ -40,7 +40,7 @@ public class File {
     @Column(name = "member_id", nullable = false)
     private int memberId;
 
-    public File(@Size(max = 100) String name, @Size(max = 10) String type, byte[] data, int memberId) {
+    public File(@Size(max = 100) String name, @Size(max = 10) FileType type, byte[] data, int memberId) {
         this.name = name;
         this.type = type;
         this.data = data;

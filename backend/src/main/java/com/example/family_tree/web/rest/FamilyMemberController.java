@@ -4,9 +4,12 @@ import com.example.family_tree.service.FamilyMemberService;
 import com.example.family_tree.service.dto.PageDTO;
 import com.example.family_tree.service.dto.RequestFamilyMemberDTO;
 import com.example.family_tree.service.dto.ResponseFamilyMemberDTO;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +27,10 @@ import javax.validation.Valid;
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
  */
 @RestController
-@RequestMapping("/api/family-members")
+@RequestMapping(value = "/api/family-members",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+@RequiredArgsConstructor
 public class FamilyMemberController {
-
-    private final Logger log = LoggerFactory.getLogger(FamilyMemberController.class);
 
     private final FamilyMemberService familyMemberService;
 
@@ -38,9 +41,8 @@ public class FamilyMemberController {
     @GetMapping
     public ResponseEntity<PageDTO> getFamilyMembers(@RequestParam(name = "start", defaultValue = "-1") int startAge,
                                                     @RequestParam(name = "end", defaultValue = "-1") int endAge,
-                                                    @RequestParam(name = "sort", defaultValue = "") String sort,
-                                                    @RequestParam(name = "page", defaultValue = "1") int pageNum) {
-        PageDTO page = familyMemberService.getFamilyMembers(startAge, endAge, pageNum, sort);
+                                                    Pageable pageable) {
+        PageDTO page = familyMemberService.getFamilyMembers(pageable, startAge, endAge);
 
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
@@ -57,7 +59,7 @@ public class FamilyMemberController {
         }
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseFamilyMemberDTO> addFamilyMember(@Valid @RequestBody RequestFamilyMemberDTO requestFamilyMemberDTO) {
         ResponseFamilyMemberDTO dto = familyMemberService.saveFamilyMember(null, requestFamilyMemberDTO);
 

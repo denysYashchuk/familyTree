@@ -11,10 +11,10 @@
     <button style="margin: 10px" (click)="resetAge()">Reset</button>
   </div>
   Sort by: <select [(ngModel)]="sort" style="margin: 10px" (ngModelChange)="search()">
-    <option value="default">default</option>
-    <option value="age">age</option>
-    <option value="sex">sex</option>
-  </select>
+  <option value="default">default</option>
+  <option value="age">age</option>
+  <option value="sex">sex</option>
+</select>
   <table border="1" cellpadding="5">
     <tr>
       <th>ID</th>
@@ -48,7 +48,7 @@
     </tr>
   </table>
   <br>
-  <button *ngIf="page.current_page > 1" (click)="prevPage()">Prev</button>
-  <button disabled>{{page.current_page}}</button>
-  <button *ngIf="page.total_pages > page.current_page" (click)="nextPage()">Next</button>
+  <button *ngIf="page.current_page > 0" (click)="prevPage()">Prev</button>
+  <button disabled>{{page.current_page + 1}}</button>
+  <button *ngIf="page.total_pages - 1 > page.current_page" (click)="nextPage()">Next</button>
 </div>

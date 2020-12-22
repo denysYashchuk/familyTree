@@ -20,7 +20,7 @@ export class FamilyMembersEditComponent implements OnInit {
   manyFiles: boolean;
   selectedFiles: FileList;
   progressInfos = [];
-  baseUrl = AppSettings.BASE_ENDPOINT;
+  baseImageUrl = AppSettings.BASE_API_ENDPOINT + '/files/';
 
   constructor(private familyMemberService: FamilyMemberService,
               private uploadFileService: UploadFileService,
@@ -54,6 +54,7 @@ export class FamilyMembersEditComponent implements OnInit {
   }
 
   addOrSave(): void {
+    this.member.birth_year = String(this.member.birth_year);
     if (this.member.id === 0) {
       this.familyMemberService.addMember(this.member).subscribe(
         response => {

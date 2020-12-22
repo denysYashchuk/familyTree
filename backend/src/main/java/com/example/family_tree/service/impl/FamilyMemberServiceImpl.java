@@ -8,25 +8,30 @@ import com.example.family_tree.service.dto.PageDTO;
 import com.example.family_tree.service.dto.RequestFamilyMemberDTO;
 import com.example.family_tree.service.dto.ResponseFamilyMemberDTO;
 import com.example.family_tree.service.mapper.FamilyMemberMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.family_tree.util.DateUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.family_tree.config.Constants.CURRENT_YEAR;
-import static com.example.family_tree.config.Constants.PAGE_SIZE;
+import static com.example.family_tree.util.Constants.PAGE_SIZE;
 
 /*
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
  */
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class FamilyMemberServiceImpl implements FamilyMemberService {
 
     private final Logger log = LoggerFactory.getLogger(FamilyMemberServiceImpl.class);
@@ -40,50 +45,44 @@ public class FamilyMemberServiceImpl implements FamilyMemberService {
     }
 
     @Override
-    public PageDTO getFamilyMembers(int startAge, int endAge, int pageNum, String sort) {
-        log.debug("Request to get FamilyMember {} - {} years old, page: {}", startAge, endAge, pageNum);
+    @Transactional(readOnly = true)
+    public PageDTO<ResponseFamilyMemberDTO> getFamilyMembers(Pageable pageable, int startAge, int endAge) {
+        log.debug("Request to get FamilyMember {} - {} years old, page: {}", startAge, endAge, pageable.getPageNumber());
 
+        Date endYear;
         if (startAge == -1) {
-            startAge = 0;
+            endYear = DateUtil.getZeroYear();
+        } else {
+            endYear = DateUtil.getStartOfYearAgo(startAge);
         }
+
+        Date startYear;
         if (endAge == -1) {
-            endAge = CURRENT_YEAR;
+            startYear = DateUtil.getCurrentYearStart();
+        } else {
+            startYear = DateUtil.getStartOfYearAgo(endAge);
         }
 
-        Page<FamilyMember> page;
+        Page<FamilyMember> page = familyMemberRepository
+                .findAllByBirthYearIsBetween(startYear, endYear, pageable);
 
-        switch (sort) {
-            case "age":
-                page = familyMemberRepository
-                        .findAllByBirthYearIsBetween(CURRENT_YEAR - endAge, CURRENT_YEAR - startAge,
-                                PageRequest.of(pageNum - 1, PAGE_SIZE, Sort.by("birthYear").descending()));
-                break;
-            case "sex":
-                page = familyMemberRepository
-                        .findAllByBirthYearIsBetween(CURRENT_YEAR - endAge, CURRENT_YEAR - startAge,
-                                PageRequest.of(pageNum - 1, PAGE_SIZE, Sort.by("sex").ascending()));
-                break;
-            default:
-                page = familyMemberRepository
-                        .findAllByBirthYearIsBetween(CURRENT_YEAR - endAge, CURRENT_YEAR - startAge,
-                                PageRequest.of(pageNum - 1, PAGE_SIZE));
-                break;
-        }
 
         List<ResponseFamilyMemberDTO> familyMemberDTOs = page.get()
                 .map(familyMemberMapper::familyMemberToResponseFamilyMemberDTO)
                 .collect(Collectors.toList());
 
-        return new PageDTO(familyMemberDTOs, pageNum, page.getTotalPages());
+        return new PageDTO<>(familyMemberDTOs, pageable.getPageNumber(), page.getTotalPages());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ResponseFamilyMemberDTO getFamilyMember(Integer id) {
         log.debug("Request to get FamilyMember : {}", id);
         return familyMemberRepository.findById(id).map(familyMemberMapper::familyMemberToResponseFamilyMemberDTO).orElse(null);
     }
 
     @Override
+    @Transactional
     public ResponseFamilyMemberDTO saveFamilyMember(Integer id, RequestFamilyMemberDTO requestFamilyMemberDTO) {
         log.debug("Request to create/update new FamilyMember: {}", requestFamilyMemberDTO);
         FamilyMember familyMember = familyMemberMapper.requestFamilyMemberDTOtoFamilyMember(requestFamilyMemberDTO);
@@ -133,12 +132,14 @@ public class FamilyMemberServiceImpl implements FamilyMemberService {
     }
 
     @Override
+    @Transactional
     public void deleteFamilyMember(Integer id) {
         log.debug("Request to delete FamilyMember : {}", id);
         familyMemberRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public ResponseFamilyMemberDTO addParent(Integer memberId, Integer parentId) {
         FamilyMember familyMember = familyMemberRepository.findById(memberId).orElse(null);
 
@@ -161,6 +162,7 @@ public class FamilyMemberServiceImpl implements FamilyMemberService {
     }
 
     @Override
+    @Transactional
     public ResponseFamilyMemberDTO removeParent(Integer memberId, Integer parentId) {
         FamilyMember familyMember = familyMemberRepository.findById(memberId).orElse(null);
 
@@ -185,6 +187,7 @@ public class FamilyMemberServiceImpl implements FamilyMemberService {
 
     }
 
+    @Transactional(readOnly = true)
     private List<FamilyMember> getFamilyMemberList(List<Integer> ids) {
         return familyMemberRepository.findByIdIn(ids);
     }

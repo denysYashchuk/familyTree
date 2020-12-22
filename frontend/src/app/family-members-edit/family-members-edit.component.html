@@ -4,8 +4,8 @@
 
   Name: <input [(ngModel)]="member.name">
   Sex: <select [(ngModel)]="member.sex">
-  <option value="male">male</option>
-  <option value="female">female</option>
+  <option value="MALE">MALE</option>
+  <option value="FEMALE">FEMALE</option>
 </select>
   Birth year: <input type="number" [(ngModel)]="member.birth_year">
 
@@ -75,7 +75,7 @@
 
   <div *ngIf="member.files" style="display: flex">
     <div *ngFor="let file of member.files">
-      <img [src]="baseUrl+file.url" width="150px" height="150px" style="margin: 10px">
+      <img [src]="baseImageUrl+file.id" width="150px" height="150px" style="margin: 10px">
     </div>
   </div>
 

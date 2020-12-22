@@ -12,8 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,12 +38,12 @@ public class FamilyMember {
     @Column(name = "name", length = 60, nullable = false)
     private String name;
 
-    @Size(max = 6)
     @Column(name = "sex", length = 6, nullable = false)
-    private String sex;
+    private Sex sex;
 
     @Column(name = "birth_year", nullable = false)
-    private Integer birthYear;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthYear;
 
     @ManyToMany
     @JoinTable(name = "parents",
@@ -55,6 +59,6 @@ public class FamilyMember {
 
     @OneToMany
     @JoinColumn(name = "member_id")
-    private Set<File> files;
+    private Set<File> files = new HashSet<>();
 
 }
