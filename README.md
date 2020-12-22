@@ -1,4 +1,4 @@
-Before start, configure your MySQL Database, add structure and data, using `family_tree_2020-12-21.sql` script.
+Before start, configure your MySQL Database, add structure and data, using `family_tree_db.sql` script.
 
 Add your DB configuration to `backend/src/main/resources/application.properties`
 
