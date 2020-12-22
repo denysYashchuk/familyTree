@@ -34,10 +34,6 @@ public class FamilyMemberController {
 
     private final FamilyMemberService familyMemberService;
 
-    public FamilyMemberController(FamilyMemberService familyMemberService) {
-        this.familyMemberService = familyMemberService;
-    }
-
     @GetMapping
     public ResponseEntity<PageDTO> getFamilyMembers(@RequestParam(name = "start", defaultValue = "-1") int startAge,
                                                     @RequestParam(name = "end", defaultValue = "-1") int endAge,

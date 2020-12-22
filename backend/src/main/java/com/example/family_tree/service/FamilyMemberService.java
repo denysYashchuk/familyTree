@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 /*
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
  */
+/**
+ * Service Interface for managing {@link FamilyMember}.
+ */
 public interface FamilyMemberService {
 
     /**

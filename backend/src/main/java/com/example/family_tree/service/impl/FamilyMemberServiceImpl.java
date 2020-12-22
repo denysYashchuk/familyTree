@@ -34,15 +34,8 @@ import static com.example.family_tree.util.Constants.PAGE_SIZE;
 @RequiredArgsConstructor
 public class FamilyMemberServiceImpl implements FamilyMemberService {
 
-    private final Logger log = LoggerFactory.getLogger(FamilyMemberServiceImpl.class);
-
     private final FamilyMemberRepository familyMemberRepository;
     private final FamilyMemberMapper familyMemberMapper;
-
-    public FamilyMemberServiceImpl(FamilyMemberRepository familyMemberRepository, FamilyMemberMapper familyMemberMapper) {
-        this.familyMemberRepository = familyMemberRepository;
-        this.familyMemberMapper = familyMemberMapper;
-    }
 
     @Override
     @Transactional(readOnly = true)

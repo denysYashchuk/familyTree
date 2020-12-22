@@ -10,7 +10,6 @@ import java.util.List;
 public final class Constants {
 
     public static final int PAGE_SIZE = 15;
-    public static final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
     public static final String FILE_URL = "/api/files/";
     public static final int MAX_IMAGES = 10;
 

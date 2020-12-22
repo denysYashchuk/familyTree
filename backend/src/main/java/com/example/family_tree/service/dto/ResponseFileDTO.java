@@ -15,7 +15,7 @@ import static com.example.family_tree.util.Constants.FILE_URL;
 @Builder
 public class ResponseFileDTO {
 
-    @JsonProperty("name")
+    private Integer id;
     private String name;
     private FileType type;
     private long size;

@@ -25,7 +25,6 @@ import java.util.Set;
  * Written by Denys Yashchuk denys.yashchuk@gmail.com, Dec 2020
  */
 @Entity
-@Table(name = "family_member")
 @Getter
 @Setter
 public class FamilyMember {
@@ -49,13 +48,13 @@ public class FamilyMember {
     @JoinTable(name = "parents",
             joinColumns = @JoinColumn(name = "member_id"),
             inverseJoinColumns = @JoinColumn(name = "parent_id"))
-    private List<FamilyMember> parents;
+    private List<FamilyMember> parents = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "parents",
             joinColumns = @JoinColumn(name = "parent_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
-    private List<FamilyMember> children;
+    private List<FamilyMember> children = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "member_id")
